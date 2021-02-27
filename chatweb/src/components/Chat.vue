@@ -24,6 +24,9 @@
                         </template>
                     </v-list-item-group>
                 </v-list>
+                <v-btn @click="pushMessage(text)" color="primary" dark>
+                    送信
+                </v-btn>
                 <v-textarea
                     v-model="text"
                     auto-grow
@@ -43,8 +46,9 @@ export default {
         selectedItem:0
     }),
     methods:{
-        pushMessage(){
-
+        pushMessage(value){
+            this.$store.commit("pushItem", value);
+            this.text = "";
         },
         checkUser(name){
             if(!name){

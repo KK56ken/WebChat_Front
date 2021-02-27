@@ -39,6 +39,10 @@ export default new Vuex.Store({
   mutations: {
     setSelectItemIndex(state, num) {
       state.selectedItem = num
+    },
+    pushItem(state, value) {
+      var item = {avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', name: 'kensuke', subtitle: value}
+      state.listItems.push(item)
     }
   },
   actions: {
