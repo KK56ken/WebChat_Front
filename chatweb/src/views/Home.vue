@@ -6,9 +6,10 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col class="pt-0 pr-0">
+      <v-col cols="2" class="pt-0 pr-0 pb-0">
         <v-card
           tile
+          style='height: 100vh'
         >
           <v-list shaped>
             <v-subheader>Recent chat</v-subheader>
@@ -31,8 +32,8 @@
           </v-list>
         </v-card>
       </v-col>
-      <v-col class="pt-0 pl-0">
-        <v-card height="500px" >
+      <v-col cols="10" class="pt-0 pl-0 pb-0">
+        <v-card height="100%">
           <v-form>
             <v-text-field
               label="メッセージ入力"
