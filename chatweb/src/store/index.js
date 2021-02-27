@@ -13,20 +13,23 @@ export default new Vuex.Store({
       name: 'kensuke',
       subtitle: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
     },
-    { divider: true, inset: true },
     {
       avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
       name: 'momotaro',
       subtitle: `Wish I could come, but I'm out of town this weekend.`,
     },
-    { divider: true, inset: true },
     {
       avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
       name: 'urasima',
       subtitle: '<h1>Do you have Paris recommendations? Have you ever been?</h1>',
     },
+    {
+      avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+      name: 'kensuke',
+      subtitle: `hello`,
+    },
     ],
-    selectedItem: 1,
+    selectedItem: 0,
     items: [
         { name: 'kensuke', icon: 'mdi-account' },
         { name: 'momotaro', icon: 'mdi-account' },

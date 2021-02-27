@@ -31,11 +31,14 @@
 <script>
 export default {
     data:() => ({
-        selectedItem:1
+        selectedItem:0
     }),
     watch:{
         selectedItem: function(newValue, oldValue){
-            if(!newValue){
+            if(newValue == 0){
+                this.$store.commit("setSelectItemIndex", newValue)
+            }
+            else if(!newValue){
                 this.$store.commit("setSelectItemIndex", oldValue)
             }else{
                 this.$store.commit("setSelectItemIndex", newValue)
