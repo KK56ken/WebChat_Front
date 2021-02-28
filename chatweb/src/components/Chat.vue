@@ -52,6 +52,7 @@ export default {
         text:"",
         selectedItem:0,
         benched: 0,
+        //test
     }),
     computed: {
       items () {
