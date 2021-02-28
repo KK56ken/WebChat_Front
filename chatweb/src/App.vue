@@ -1,6 +1,6 @@
 <template>
   <v-app>
-   <v-main style='height: 100vh'>
+   <v-main>
      <router-view></router-view>
     </v-main>
   </v-app>

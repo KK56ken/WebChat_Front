@@ -31,17 +31,23 @@
                         </v-list-item-group>
                     </v-list>
                 </v-virtual-scroll>
-                <v-btn @click="pushMessage(text)" color="primary" dark>
-                    送信
-                </v-btn>
-                <v-textarea
-                    v-model="text"
-                    auto-grow
-                    outlined
-                    label="メッセージ入力"
-                    solo
-                    row-height="1"
-                ></v-textarea>
+                <v-row  class="pa-0">
+                    <v-col class="pr-0" cols="11">
+                        <v-textarea
+                            v-model="text"
+                            auto-grow
+                            outlined
+                            label="メッセージ入力"
+                            solo
+                            row-height="1"
+                        ></v-textarea>
+                    </v-col>
+                    <v-col class="pl-0" cols="1">
+                        <v-btn @click="pushMessage(text)" style="width:100%; height:55px" color="primary" dark>
+                            送信
+                        </v-btn>
+                    </v-col>
+                </v-row>
             </v-card>
         </v-col>
     </div>

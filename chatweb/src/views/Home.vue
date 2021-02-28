@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col cols='12' class="pb-0">
+      <v-col cols='12' class="pr-0 pb-0">
         <components is='Header'></components>
       </v-col>
     </v-row>
