@@ -4,8 +4,8 @@
             <v-card style="height:100vh">
                 <v-virtual-scroll
                     :bench="benched"
-                    :items="items"
-                    height="500"
+                    :items="[0]"
+                    height="800"
                     item-height="80"
                 >
                     <v-list class="pt-0 pl-0 pr-0" three-line>
@@ -13,7 +13,7 @@
                             v-model="selectedItem"
                             color="primary"
                         >
-                            <template v-for="(item,index) in $store.state.listItems">
+                            <template v-for="(item,index) in messageList">
                                 <v-list-item
                                     v-if="checkUser(item.name)"
                                     :key="index"
@@ -58,19 +58,16 @@ export default {
         text:"",
         selectedItem:0,
         benched: 0,
-        //test
     }),
     computed: {
-      items () {
-        return Array.from({ length: this.length }, (k, v) => v + 1)
-      },
-      length () {
-        return 20
-      },
+        messageList(){
+            return this.$store.getters.getMessage;
+        },
     },
     methods:{
         pushMessage(value){
-            if(value.trim()){
+            var validate = value.trim();
+            if(validate){
                 this.$store.commit("pushItem", value);
                 this.text = "";
             }
@@ -84,6 +81,9 @@ export default {
             }
             return false
         }
+    },
+    destroyed(){
+        console.log("destroyed")
     }
 }
 </script>

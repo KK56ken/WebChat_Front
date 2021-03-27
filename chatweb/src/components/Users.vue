@@ -5,7 +5,7 @@
           tile
           style='height: 100vh'
         >
-          <v-list shaped>
+          <v-list shaped >
             <v-subheader>Recent chat</v-subheader>
             <v-list-item-group
               v-model="selectedItem"
@@ -31,7 +31,7 @@
 <script>
 export default {
     data:() => ({
-        selectedItem:0
+        selectedItem:0,
     }),
     watch:{
         selectedItem: function(newValue, oldValue){

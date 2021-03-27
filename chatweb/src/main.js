@@ -4,11 +4,12 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
-
-
+import Header from './components/Header.vue'
 
 
 Vue.config.productionTip = false
+Vue.component("Header", Header)
+
 
 new Vue({
   router,
