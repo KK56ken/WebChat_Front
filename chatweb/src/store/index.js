@@ -10,19 +10,21 @@ export default new Vuex.Store({
     messages: [
       {
         avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-        name: 'tarou',
-        subtitle: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+        receiveUserName: 'kensuke',
+        sendUserName: 'tarou',
+        message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
       },
       {
         avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-        name: 'momotaro',
-        subtitle: `Wish I could come, but I'm out of town this weekend.`,
+        receiveUserName: 'kensuke',
+        sendUserName: 'momotaro',
+        message: `Wish I could come, but I'm out of town this weekend.`,
       },
-
       {
         avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-        name: 'urasima',
-        subtitle: '<h1>Do you have Paris recommendations? Have you ever been?</h1>',
+        receiveUserName: 'kensuke',
+        sendUserName: 'urasima',
+        message: '<h1>Do you have Paris recommendations? Have you ever been?</h1>',
       },
     ],
     selectedUserNum: 0,
@@ -43,8 +45,7 @@ export default new Vuex.Store({
       state.selectedUserNum = num
     },
     pushItem(state, value) {
-      var item = { avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', name: 'tarou', subtitle: value }
-      console.log(item)
+      var item = { avatar: '', receiveUserName: state.items[state.selectedUserNum].name ,sendUserName: state.userInfo.name, message: value };
       state.messages.push(item)
     },
     signUp(state, userinfo) {
@@ -62,14 +63,18 @@ export default new Vuex.Store({
       }).then(response => {
         console.log(response);
       });
-    }
+    },
+    pushItem(context, value) {
+      context.commit('pushItem', value);
+      //state.messages.push(item)
+    },
   },
   modules: {
   },
   getters: {
     getName: state => state.userInfo.name,
     //messages: state => Object.filter(state.users, (user) => user.messages.name === state.items[state.selectedUserNum].name)
-    messages: state => state.messages.filter((message) => message.name === state.items[state.selectedUserNum].name),
+    messages: state => state.messages.filter((message) => message.sendUserName === state.items[state.selectedUserNum].name || message.receiveUserName === state.items[state.selectedUserNum].name ),
     userToken: state => state.userInfo.userToken
   }
 })

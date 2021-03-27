@@ -8,7 +8,7 @@
                     height="850"
                     item-height="80"
                 >
-                    <v-list class="pt-0 pl-0 pr-0" three-line>
+                    <v-list class="pt-1 pl-0 pr-0" three-line>
                         <v-list-item-group
                             v-model="selectedItem"
                             color="primary"
@@ -22,8 +22,8 @@
                                     </v-list-item-avatar>
 
                                     <v-list-item-content>
-                                    <v-list-item-title v-html="user.name"></v-list-item-title>
-                                    <v-list-item-subtitle v-html="user.subtitle"></v-list-item-subtitle>
+                                    <v-list-item-title v-html="user.sendUserName"></v-list-item-title>
+                                    <v-list-item-subtitle v-html="user.message"></v-list-item-subtitle>
                                     </v-list-item-content>
                                 </v-list-item>
                             </template>
@@ -68,7 +68,7 @@ export default {
         pushMessage(value){
             var validate = value.trim();
             if(validate){
-                this.$store.commit("pushItem", value);
+                this.$store.dispatch('pushItem', value);
                 this.text = "";
             }
         },
