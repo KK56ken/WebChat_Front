@@ -5,7 +5,7 @@
                 <v-virtual-scroll
                     :bench="benched"
                     :items="[0]"
-                    height="800"
+                    height="850"
                     item-height="80"
                 >
                     <v-list class="pt-0 pl-0 pr-0" three-line>
@@ -31,7 +31,7 @@
                     </v-list>
                 </v-virtual-scroll>
                 <v-row  class="pa-0">
-                    <v-col class="pr-0" cols="11">
+                    <v-col class="pr-0 pb-0" cols="11">
                         <v-textarea
                             v-model="text"
                             auto-grow

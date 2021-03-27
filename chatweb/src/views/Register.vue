@@ -1,12 +1,12 @@
+
 <template>
   <div>
-    <componets is="Header"></componets>
     <v-row>
       <v-col
         cols="12"
       >
         <v-sheet
-          class="pa-12"
+          class="pa-12 form"
           color="grey lighten-3"
         >
         <v-form
@@ -18,24 +18,30 @@
             v-model="userInfo.name"
             :counter="10"
             :rules="nameRules"
-            label="Name"
+            label="名前"
             required
           ></v-text-field>
 
           <v-text-field
             v-model="userInfo.password"
             :rules="passwordRules"
-            label="password"
+            label="パスワード"
             required
           ></v-text-field>
 
+          <v-text-field
+            v-model="userInfo.rePassword"
+            :rules="passwordRules"
+            label="パスワード確認用"
+            required
+          ></v-text-field>
           <v-btn
             :disabled="!valid"
             color="success"
             class="mr-4"
             @click="validate(userInfo)"
           >
-            Submit
+            登録
           </v-btn>
 
           <v-btn
@@ -43,7 +49,7 @@
             class="mr-4"
             @click="reset"
           >
-            Clear
+            入力すべて削除
           </v-btn>
         </v-form>
         </v-sheet>
@@ -61,35 +67,32 @@ export default {
       userInfo: {
         name: '',
         password: '',
+        rePassword: ''
       },
       nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+        v => !!v || '名前を入力してください',
+        v => (v && v.length <= 10) || '名前は１０文字以内にしてください',
       ],
       passwordRules: [
-        v => !!v || 'password is required',
+        v => !!v || 'パスワードを入力してください',
+      ],
+      rePasswordRules: [
+        v => !!v || 'パスワードを入力してください',
       ],
     }),
-
     methods: {
       validate(userInfo) {
-        if(this.$refs.form.validate()){
-          this.$store.commit("signUp", userInfo)
+        if(this.$refs.form.validate() && this.userInfo.password === this.userInfo.rePassword){
+          this.$store.dispatch("signUp", { name:userInfo.name, password:userInfo.password })
         }else{
           this.$refs.form.validate()
         }
-        // console.log(this.$refs.form.validate())
       },
       reset () {
         this.$refs.form.reset()
       },
       resetValidation () {
         this.$refs.form.resetValidation()
-      },
-      remderHome(name){
-        if(name !== ""){
-          this.$router.push("/").catch(()=>{})
-        }
       }
     },
     mounted(){
@@ -100,3 +103,8 @@ export default {
 
 
 </script>
+<style scoped>
+.form{
+    margin: 80px;
+}
+</style>

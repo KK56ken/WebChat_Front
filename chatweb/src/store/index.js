@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -7,11 +8,6 @@ export default new Vuex.Store({
   state: {
     text: "",
     messages: [
-      {
-        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-        name: 'tarou',
-        subtitle: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-      },
       {
         avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
         name: 'tarou',
@@ -36,8 +32,9 @@ export default new Vuex.Store({
         { name: 'urasima', icon: 'mdi-account' },
     ],
     userInfo:{
-      name: "",
-      token:""
+      name: "kensuke",
+      userImage: "",
+      userToken:"aaa"
     },
     header_nav:true,
   },
@@ -58,13 +55,21 @@ export default new Vuex.Store({
     }
   },
   actions: {
-
+    signUp(userInfo) {
+      axios.post('url', {
+        name: userInfo.name,
+        password: userInfo.password
+      }).then(response => {
+        console.log(response);
+      });
+    }
   },
   modules: {
   },
   getters: {
     getName: state => state.userInfo.name,
     //messages: state => Object.filter(state.users, (user) => user.messages.name === state.items[state.selectedUserNum].name)
-    messages: state => state.messages.filter((message) => message.name === state.items[state.selectedUserNum].name)
+    messages: state => state.messages.filter((message) => message.name === state.items[state.selectedUserNum].name),
+    userToken: state => state.userInfo.userToken
   }
 })
