@@ -13,18 +13,17 @@
                             v-model="selectedItem"
                             color="primary"
                         >
-                            <template v-for="(item,index) in messageList">
+                            <template v-for="(user,index) in userMessages">
                                 <v-list-item
-                                    v-if="checkUser(item.name)"
                                     :key="index"
                                 >
                                     <v-list-item-avatar>
-                                    <v-img :src="item.avatar"></v-img>
+                                    <v-img :src="user.avatar"></v-img>
                                     </v-list-item-avatar>
 
                                     <v-list-item-content>
-                                    <v-list-item-title v-html="item.name"></v-list-item-title>
-                                    <v-list-item-subtitle v-html="item.subtitle"></v-list-item-subtitle>
+                                    <v-list-item-title v-html="user.name"></v-list-item-title>
+                                    <v-list-item-subtitle v-html="user.subtitle"></v-list-item-subtitle>
                                     </v-list-item-content>
                                 </v-list-item>
                             </template>
@@ -60,8 +59,9 @@ export default {
         benched: 0,
     }),
     computed: {
-        messageList(){
-            return this.$store.getters.getMessage;
+        userMessages(){
+            console.log(this.$store.getters.messages)
+            return this.$store.getters.messages;
         },
     },
     methods:{
@@ -72,18 +72,6 @@ export default {
                 this.text = "";
             }
         },
-        checkUser(name){
-            if(!name){
-                return false
-            }
-            if(this.$store.state.items[this.$store.state.selectedItem].name === name){
-                return true
-            }
-            return false
-        }
-    },
-    destroyed(){
-        console.log("destroyed")
     }
 }
 </script>
