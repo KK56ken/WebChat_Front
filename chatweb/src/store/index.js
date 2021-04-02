@@ -15,6 +15,12 @@ export default new Vuex.Store({
         message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
       },
       {
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+        receiveUserName: 'kensuke',
+        sendUserName: 'tarou',
+        message: `test`,
+      },
+      {
         avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
         receiveUserName: 'kensuke',
         sendUserName: 'momotaro',
@@ -28,24 +34,51 @@ export default new Vuex.Store({
       },
     ],
     selectedUserNum: 0,
-    items: [
-        { name: 'tarou', icon: 'mdi-account' },
-        { name: 'momotaro', icon: 'mdi-account' },
-        { name: 'urasima', icon: 'mdi-account' },
+    friends: [
+        { id:1, name: 'tarou', icon: 'mdi-account' },
+        { id:2, name: 'momotaro', icon: 'mdi-account' },
+        { id:3, name: 'urasima', icon: 'mdi-account' },
     ],
-    userInfo:{
-      name: "kensuke",
-      userImage: "",
-      userToken:"aaa"
+    userInfo: {
+      userid:"",
+      email: "",
+      name: "",
+      password: "",
+      image: "",
+      token:""
     },
-    header_nav:true,
+    header_nav: true,
+    message: {
+      1: [
+        {
+          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+          receiveUserName: 'kensuke',
+          sendUserName: 'tarou',
+          message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+        },
+        {
+          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+          receiveUserName: 'kensuke',
+          sendUserName: 'tarou',
+          message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+        }
+      ],
+      2: [
+        {
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+        receiveUserName: 'kensuke',
+        sendUserName: 'tarou',
+        message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+        }
+      ]
+    }
   },
   mutations: {
     setSelectItemIndex(state, num) {
       state.selectedUserNum = num
     },
     pushItem(state, value) {
-      var item = { avatar: '', receiveUserName: state.items[state.selectedUserNum].name ,sendUserName: state.userInfo.name, message: value };
+      var item = { avatar: '', receiveUserName: state.friends[state.selectedUserNum].name ,sendUserName: state.userInfo.name, message: value };
       state.messages.push(item)
     },
     signUp(state, userinfo) {
@@ -56,17 +89,29 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    signUp(userInfo) {
-      axios.post('url', {
-        name: userInfo.name,
-        password: userInfo.password
+    signUp(context, userInfo) {
+      // console.log(userInfo.email)
+      axios.post('http://localhost:9000/api/register', {
+        Email: userInfo.email,
+        Name: userInfo.name,
+        Password: userInfo.password,
+        Token: userInfo.token,
       }).then(response => {
         console.log(response);
       });
     },
+    login(context, userInfo) {
+      axios.post('http://localhost:9000/api/login', {
+        Email: userInfo.email,
+        Password: userInfo.password
+      }).then(res => {
+        context.state.userInfo.userid = res.data.id
+        context.state.userInfo.name = res.data.name
+        context.state.userInfo.token = res.data.token
+      })
+    },
     pushItem(context, value) {
       context.commit('pushItem', value);
-      //state.messages.push(item)
     },
   },
   modules: {
@@ -74,7 +119,7 @@ export default new Vuex.Store({
   getters: {
     getName: state => state.userInfo.name,
     //messages: state => Object.filter(state.users, (user) => user.messages.name === state.items[state.selectedUserNum].name)
-    messages: state => state.messages.filter((message) => message.sendUserName === state.items[state.selectedUserNum].name || message.receiveUserName === state.items[state.selectedUserNum].name ),
-    userToken: state => state.userInfo.userToken
+    messages: state => state.messages.filter((message) => message.sendUserName === state.friends[state.selectedUserNum].name || message.receiveUserName === state.friends[state.selectedUserNum].name ),
+    userToken: state => state.userInfo.token
   }
 })

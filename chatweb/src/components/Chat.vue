@@ -2,6 +2,7 @@
     <div>
         <v-col class="pt-0 pl-0 pb-0">
             <v-card style="height:100vh">
+                <!-- {{ $store.state.message[1].id2 }} -->
                 <v-virtual-scroll
                     :bench="benched"
                     :items="[0]"

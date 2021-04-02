@@ -12,7 +12,7 @@
               color="primary"
             >
               <v-list-item
-                v-for="(item, i) in $store.state.items"
+                v-for="(item, i) in $store.state.friends"
                 :key="i"
               >
                 <v-list-item-icon>

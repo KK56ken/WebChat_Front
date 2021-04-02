@@ -15,6 +15,13 @@
           lazy-validation
         >
           <v-text-field
+            v-model="userInfo.email"
+            :rules="emailRules"
+            label="メールアドレス"
+            required
+          ></v-text-field>
+
+          <v-text-field
             v-model="userInfo.name"
             :counter="10"
             :rules="nameRules"
@@ -29,17 +36,11 @@
             required
           ></v-text-field>
 
-          <v-text-field
-            v-model="userInfo.rePassword"
-            :rules="passwordRules"
-            label="パスワード確認用"
-            required
-          ></v-text-field>
           <v-btn
             :disabled="!valid"
             color="success"
             class="mr-4"
-            @click="validate(userInfo)"
+            @click="validate()"
           >
             登録
           </v-btn>
@@ -53,7 +54,8 @@
           </v-btn>
         </v-form>
         </v-sheet>
-        {{ $store.state.userInfo}}
+        {{ $store.state.userInfo }}
+        
       </v-col>
     </v-row>
   </div>
@@ -65,9 +67,9 @@ export default {
    data: () => ({
       valid: true,
       userInfo: {
+        email:'',
         name: '',
-        password: '',
-        rePassword: ''
+        password: ''
       },
       nameRules: [
         v => !!v || '名前を入力してください',
@@ -76,14 +78,16 @@ export default {
       passwordRules: [
         v => !!v || 'パスワードを入力してください',
       ],
-      rePasswordRules: [
-        v => !!v || 'パスワードを入力してください',
+      emailRules: [
+        v => !!v || 'メールアドレスを入力してください',
       ],
     }),
     methods: {
-      validate(userInfo) {
-        if(this.$refs.form.validate() && this.userInfo.password === this.userInfo.rePassword){
-          this.$store.dispatch("signUp", { name:userInfo.name, password:userInfo.password })
+      validate() {
+        if(this.$refs.form.validate()){
+          // console.log(this.userInfo.email, this.userInfo.name,this.userInfo.password )
+          var json = { email:this.userInfo.email, name:this.userInfo.name, password:this.userInfo.password, token:"" }
+          this.$store.dispatch("signUp", json)
         }else{
           this.$refs.form.validate()
         }
@@ -98,7 +102,6 @@ export default {
     mounted(){
       // this.$store.watch(() => this.$store.getters.getName, name => this.renderHome(name))
     }
-
 }
 
 

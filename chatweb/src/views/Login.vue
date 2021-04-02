@@ -14,10 +14,10 @@
           lazy-validation
         >
           <v-text-field
-            v-model="userInfo.name"
+            v-model="userInfo.email"
             :counter="10"
-            :rules="nameRules"
-            label="Name"
+            :rules="emailRules"
+            label="Email"
             required
           ></v-text-field>
 
@@ -34,7 +34,7 @@
             class="mr-4"
             @click="validate(userInfo)"
           >
-            Submit
+            ログイン
           </v-btn>
 
           <v-btn
@@ -42,11 +42,10 @@
             class="mr-4"
             @click="reset"
           >
-            Clear
+            入力すべて削除
           </v-btn>
         </v-form>
         </v-sheet>
-        {{ $store.state.userInfo}}
       </v-col>
     </v-row>
   </div>
@@ -58,12 +57,11 @@ export default {
    data: () => ({
       valid: true,
       userInfo: {
-        name: '',
+        email: '',
         password: '',
       },
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => (v && v.length <= 10) || 'Name must be less than 10 characters',
+      emailRules: [
+        v => !!v || 'password is required',
       ],
       passwordRules: [
         v => !!v || 'password is required',
@@ -73,7 +71,7 @@ export default {
     methods: {
       validate(userInfo) {
         if(this.$refs.form.validate()){
-          this.$store.commit("signUp", userInfo)
+          this.$store.dispatch("login", userInfo)
         }else{
           this.$refs.form.validate()
         }
@@ -85,13 +83,6 @@ export default {
       resetValidation () {
         this.$refs.form.resetValidation()
       },
-      remderHome(name){
-        if(name !== ""){
-          this.$router.push("/").catch(()=>{})
-        }
-      }
     },
 }
-
-
 </script>
