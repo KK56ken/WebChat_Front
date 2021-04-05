@@ -16,8 +16,20 @@ const routes = [
       if (store.getters.userToken) {
         next();
       } else {
-        console.log(store.getters.userToken)
         next('/Login');
+      }
+    }
+  },
+  {
+    path: '/Login',
+    name: 'Login',
+    component: Login,
+    beforeEnter(to, from, next) {
+      if (store.getters.userToken) {
+        print("aaaa")
+        next('/');
+      } else {
+        next();
       }
     }
   },
@@ -33,18 +45,7 @@ const routes = [
       }
     }
   },
-  {
-    path: '/Login',
-    name: 'Login',
-    component: Login,
-    beforeEnter(to, from, next) {
-      if (store.getters.userToken) {
-        next('/');
-      } else {
-        next();
-      }
-    }
-  }
+  
 ]
 
 const router = new VueRouter({

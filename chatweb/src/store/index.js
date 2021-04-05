@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from '../router'
 
 Vue.use(Vuex)
 
@@ -98,6 +99,7 @@ export default new Vuex.Store({
         Token: userInfo.token,
       }).then(response => {
         console.log(response);
+        router.push('/login')
       });
     },
     login(context, userInfo) {
@@ -108,6 +110,7 @@ export default new Vuex.Store({
         context.state.userInfo.userid = res.data.id
         context.state.userInfo.name = res.data.name
         context.state.userInfo.token = res.data.token
+        router.push('/')
       })
     },
     pushItem(context, value) {

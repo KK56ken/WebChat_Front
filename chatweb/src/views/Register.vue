@@ -55,7 +55,6 @@
         </v-form>
         </v-sheet>
         {{ $store.state.userInfo }}
-        
       </v-col>
     </v-row>
   </div>
