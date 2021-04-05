@@ -10,6 +10,7 @@ import axios from "axios";
 Vue.config.productionTip = false
 Vue.component("Header", Header)
 
+store.dispatch('autoLogin')
 
 new Vue({
   router,

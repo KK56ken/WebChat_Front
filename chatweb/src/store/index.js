@@ -87,9 +87,17 @@ export default new Vuex.Store({
     },
     headerNav(state, isnav) {
       state.header_nav = isnav
+    },
+    setToken(state, token) {
+      state.userInfo.token = token
     }
   },
   actions: {
+    autoLogin({ commit }) {
+      const userToken = localStorage.getItem('userToken');
+      if (!userToken) return;
+      commit('setToken', userToken)
+    },
     signUp(context, userInfo) {
       // console.log(userInfo.email)
       axios.post('http://localhost:9000/api/register', {
@@ -97,7 +105,7 @@ export default new Vuex.Store({
         Name: userInfo.name,
         Password: userInfo.password,
         Token: userInfo.token,
-      }).then(response => {
+      },).then(response => {
         console.log(response);
         router.push('/login')
       });
@@ -107,6 +115,7 @@ export default new Vuex.Store({
         Email: userInfo.email,
         Password: userInfo.password
       }).then(res => {
+        localStorage.setItem('userToken',res.data.token);
         context.state.userInfo.userid = res.data.id
         context.state.userInfo.name = res.data.name
         context.state.userInfo.token = res.data.token
