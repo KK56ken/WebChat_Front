@@ -1,60 +1,59 @@
-
 <template>
   <div>
-    <v-row>
+    <v-row class="justify-center">
       <v-col
-        cols="12"
+        cols="8"
       >
-        <v-sheet
-          class="pa-12 form"
-          color="grey lighten-3"
+        <v-card
+          class="pa-12"
         >
-        <v-form
-          ref="form"
-          v-model="valid"
-          lazy-validation
-        >
-          <v-text-field
-            v-model="userInfo.email"
-            :rules="emailRules"
-            label="メールアドレス"
-            required
-          ></v-text-field>
-
-          <v-text-field
-            v-model="userInfo.name"
-            :counter="10"
-            :rules="nameRules"
-            label="名前"
-            required
-          ></v-text-field>
-
-          <v-text-field
-            v-model="userInfo.password"
-            :rules="passwordRules"
-            label="パスワード"
-            required
-          ></v-text-field>
-
-          <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            @click="validate()"
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
           >
-            登録
-          </v-btn>
+            <v-text-field
+              v-model="userInfo.name"
+              :counter="10"
+              :rules="nameRules"
+              label="名前"
+              required
+            ></v-text-field>
 
-          <v-btn
-            color="error"
-            class="mr-4"
-            @click="reset"
-          >
-            入力すべて削除
-          </v-btn>
-        </v-form>
-        </v-sheet>
-        {{ $store.state.userInfo }}
+            <v-text-field
+              v-model="userInfo.email"
+              :rules="emailRules"
+              label="メールアドレス"
+              required
+            ></v-text-field>
+
+            <v-text-field
+              v-model="userInfo.password"
+              :rules="passwordRules"
+              type="password"
+              label="パスワード"
+              required
+            ></v-text-field>
+
+            <v-btn
+              :disabled="!valid"
+              color="success"
+              class="mr-4"
+              @click="validate()"
+            >
+              登録
+            </v-btn>
+
+            <v-btn
+              color="error"
+              class="mr-4"
+              @click="reset"
+            >
+              入力すべて削除
+            </v-btn>
+          </v-form>
+        </v-card>
+        <!-- {{ $store.state.userInfo }} -->
       </v-col>
     </v-row>
   </div>
@@ -106,7 +105,5 @@ export default {
 
 </script>
 <style scoped>
-.form{
-    margin: 80px;
-}
+
 </style>

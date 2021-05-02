@@ -1,10 +1,20 @@
 <template>
   <v-app>
    <v-main>
-      <template v-if="userToken">
-        <router-link to="/Login" class="header-item">ログイン</router-link>
-        <router-link to="/Register" class="header-item">登録</router-link>
-      </template>
+      <v-row class="justify-center">
+          <template v-if="userToken">
+            <v-col cols="4">
+              <router-link to="/Login" class="header-item">
+                <v-card style="text-align: center">ログインページ</v-card>
+              </router-link>
+            </v-col>
+            <v-col cols="4">
+              <router-link to="/Register" class="header-item">
+                <v-card style="text-align: center">登録ページ</v-card>
+              </router-link>
+            </v-col>
+          </template>
+      </v-row>
       <router-view></router-view>
     </v-main>
   </v-app>

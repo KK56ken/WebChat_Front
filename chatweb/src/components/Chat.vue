@@ -14,8 +14,8 @@
                     item-height="80"
                 >
                     <template v-slot:default="{ item }">
-                        <v-list-item :key="item.message" class="pt-0 pl-0 pr-0"  three-line>
-                            <v-list-item-avatar>
+                        <v-list-item :key="item.message" class="pt-0 pl-0 pr-0" three-line>
+                            <v-list-item-avatar class="ma-5">
                                 <v-img :src="item.avatar"></v-img>
                             </v-list-item-avatar>
 
