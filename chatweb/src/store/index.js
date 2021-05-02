@@ -9,18 +9,18 @@ export default new Vuex.Store({
   state: {
     text: "",
     messages: [
-      {
-        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-        receiveUserName: 'kensuke',
-        sendUserName: 'tarou',
-        message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-      },
-      {
-        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-        receiveUserName: 'kensuke',
-        sendUserName: 'tarou',
-        message: `test`,
-      },
+      // {
+      //   avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+      //   receiveUserName: 'kensuke',
+      //   sendUserName: 'tarou',
+      //   message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+      // },
+      // {
+      //   avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+      //   receiveUserName: 'kensuke',
+      //   sendUserName: 'tarou',
+      //   message: `test`,
+      // },
       {
         avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
         receiveUserName: 'kensuke',
@@ -79,7 +79,7 @@ export default new Vuex.Store({
       state.selectedUserNum = num
     },
     pushItem(state, value) {
-      var item = { avatar: '', receiveUserName: state.friends[state.selectedUserNum].name ,sendUserName: state.userInfo.name, message: value };
+      var item = { avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', receiveUserName: state.friends[state.selectedUserNum].name ,sendUserName: state.userInfo.name, message: value };
       state.messages.push(item)
     },
     signUp(state, userinfo) {
@@ -90,6 +90,9 @@ export default new Vuex.Store({
     },
     setToken(state, token) {
       state.userInfo.token = token
+    },
+    setFriends(state, friendsJson) {
+      state.firends = friendsJson
     }
   },
   actions: {
@@ -119,7 +122,14 @@ export default new Vuex.Store({
         context.state.userInfo.userid = res.data.id
         context.state.userInfo.name = res.data.name
         context.state.userInfo.token = res.data.token
+        context.dispatch('getFriends')
         router.push('/')
+      })
+    },
+    getFriends({ commit }) {
+      axios.get('http://localhost:9000/api/friends')
+        .then(res => {
+          commit('setFriends', res)
       })
     },
     pushItem(context, value) {
