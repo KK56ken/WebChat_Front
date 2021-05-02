@@ -6,9 +6,13 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import Header from './components/Header.vue'
 import axios from "axios";
+import VueChatScroll from 'vue-chat-scroll';
 
 Vue.config.productionTip = false
+
 Vue.component("Header", Header)
+
+Vue.use(VueChatScroll);
 
 store.dispatch('autoLogin')
 

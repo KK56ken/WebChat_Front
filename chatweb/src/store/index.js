@@ -9,18 +9,18 @@ export default new Vuex.Store({
   state: {
     text: "",
     messages: [
-      // {
-      //   avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-      //   receiveUserName: 'kensuke',
-      //   sendUserName: 'tarou',
-      //   message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-      // },
-      // {
-      //   avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-      //   receiveUserName: 'kensuke',
-      //   sendUserName: 'tarou',
-      //   message: `test`,
-      // },
+      {
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+        receiveUserName: 'kensuke',
+        sendUserName: 'tarou',
+        message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+      },
+      {
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+        receiveUserName: 'kensuke',
+        sendUserName: 'tarou',
+        message: `test`,
+      },
       {
         avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
         receiveUserName: 'kensuke',
