@@ -124,13 +124,16 @@ export default new Vuex.Store({
         context.state.userInfo.token = res.data.token
         context.dispatch('getFriends')
         router.push('/')
+        context.dispatch("getFriends")
       })
     },
-    getFriends({ commit }) {
-      axios.get('http://localhost:9000/api/friends')
+    getFriends() {
+      axios.get('http://localhost:9000/api/friend?id=1')
         .then(res => {
-          commit('setFriends', res)
-      })
+          console.log(res.data)
+          // console.log(res.data.id)
+        })
+
     },
     pushItem(context, value) {
       context.commit('pushItem', value);
