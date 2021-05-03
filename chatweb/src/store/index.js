@@ -33,6 +33,12 @@ export default new Vuex.Store({
         sendUserName: 'urasima',
         message: '<h1>Do you have Paris recommendations? Have you ever been?</h1>',
       },
+      {
+        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+        receiveUserName: 'あらた',
+        sendUserName: 'kensuke',
+        message: '<h1>Do you have Paris recommendations? Have you ever been?</h1>',
+      },
     ],
     selectedUserNum: 0,
     friends: [
@@ -92,7 +98,7 @@ export default new Vuex.Store({
       state.userInfo.token = token
     },
     setFriends(state, friendsJson) {
-      state.firends = friendsJson
+      state.friends = friendsJson
     }
   },
   actions: {
@@ -118,20 +124,25 @@ export default new Vuex.Store({
         Email: userInfo.email,
         Password: userInfo.password
       }).then(res => {
+        console.log(res.data)
+        console.log(typeof res.data)
         localStorage.setItem('userToken',res.data.token);
         context.state.userInfo.userid = res.data.id
         context.state.userInfo.name = res.data.name
         context.state.userInfo.token = res.data.token
         context.dispatch('getFriends')
         router.push('/')
-        context.dispatch("getFriends")
       })
     },
-    getFriends() {
+    getFriends(context) {
       axios.get('http://localhost:9000/api/friend?id=1')
         .then(res => {
-          console.log(res.data)
-          // console.log(res.data.id)
+          var i = 0;
+          res.data.forEach(item => {
+            res.data[i] = JSON.parse(item);
+            i++;
+          })
+          context.commit('setFriends', res.data)
         })
 
     },
