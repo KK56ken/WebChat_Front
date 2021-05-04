@@ -60,9 +60,8 @@ export default new Vuex.Store({
     setSelectItemIndex(state, num) {
       state.selectedUserNum = num
     },
-    pushItem(state, value) {
-      var item = { avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg', receiveUserName: state.friends[state.selectedUserNum].name ,sendUserName: state.userInfo.name, message: value };
-      state.messages.push(item)
+    pushMessage(state, messages) {
+      state.messages.push(messages)
     },
     signUp(state, userinfo) {
       state.userInfo.name = userinfo.name
@@ -78,9 +77,6 @@ export default new Vuex.Store({
     },
     setMessages(state, messages) {
       state.messages = messages
-    },
-    getToken(state) {
-      return state.userInfo.token
     }
   },
   actions: {
@@ -89,17 +85,17 @@ export default new Vuex.Store({
       if (!userToken) return;
       context.commit('setToken', userToken)
 
-      var token = context.commit("getToken")
+      var token = context.state.userInfo.token
       axios.post('http://localhost:9000/api/autoLogin', {
         Token: token,
       }).then(res => {
-        console.log(res)
+        context.state.userInfo.userid = res.data.id
+        context.state.userInfo.name = res.data.name
         context.dispatch('getFriends')
         context.dispatch('getMessages')
       });
     },
     signUp(context, userInfo) {
-      // console.log(userInfo.email)
       axios.post('http://localhost:9000/api/register', {
         Email: userInfo.email,
         Name: userInfo.name,
@@ -146,8 +142,16 @@ export default new Vuex.Store({
           context.commit('setMessages', res.data)
         })
     },
-    pushItem(context, value) {
-      context.commit('pushItem', value);
+    postMessage(context,messages) {
+      console.log(messages)
+      axios.post('http://localhost:9000/api/message', {
+        SendUserId: messages.sendUserId,
+        ReceiveUserId: messages.receiveUserId,
+        Message: messages.message
+      }).then(res => {
+        console.log(res.data)
+        context.commit('pushMessage', res.data)
+        })
     },
   },
   modules: {
