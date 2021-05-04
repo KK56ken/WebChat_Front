@@ -55,30 +55,6 @@ export default new Vuex.Store({
       token:""
     },
     header_nav: true,
-    message: {
-      1: [
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          receiveUserName: 'kensuke',
-          sendUserName: 'tarou',
-          message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          receiveUserName: 'kensuke',
-          sendUserName: 'tarou',
-          message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-        }
-      ],
-      2: [
-        {
-        avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-        receiveUserName: 'kensuke',
-        sendUserName: 'tarou',
-        message: `I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
-        }
-      ]
-    }
   },
   mutations: {
     setSelectItemIndex(state, num) {
@@ -99,13 +75,28 @@ export default new Vuex.Store({
     },
     setFriends(state, friendsJson) {
       state.friends = friendsJson
+    },
+    setMessages(state, messages) {
+      state.messages = messages
+    },
+    getToken(state) {
+      return state.userInfo.token
     }
   },
   actions: {
-    autoLogin({ commit }) {
+    autoLogin(context) {
       const userToken = localStorage.getItem('userToken');
       if (!userToken) return;
-      commit('setToken', userToken)
+      context.commit('setToken', userToken)
+
+      var token = context.commit("getToken")
+      axios.post('http://localhost:9000/api/autoLogin', {
+        Token: token,
+      }).then(res => {
+        console.log(res)
+        context.dispatch('getFriends')
+        context.dispatch('getMessages')
+      });
     },
     signUp(context, userInfo) {
       // console.log(userInfo.email)
@@ -124,13 +115,12 @@ export default new Vuex.Store({
         Email: userInfo.email,
         Password: userInfo.password
       }).then(res => {
-        console.log(res.data)
-        console.log(typeof res.data)
         localStorage.setItem('userToken',res.data.token);
         context.state.userInfo.userid = res.data.id
         context.state.userInfo.name = res.data.name
         context.state.userInfo.token = res.data.token
         context.dispatch('getFriends')
+        context.dispatch('getMessages')
         router.push('/')
       })
     },
@@ -144,7 +134,17 @@ export default new Vuex.Store({
           })
           context.commit('setFriends', res.data)
         })
-
+    },
+    getMessages(context) {
+      axios.get('http://localhost:9000/api/message?id=1')
+        .then(res => {
+          var i = 0;
+          res.data.forEach(item => {
+            res.data[i] = JSON.parse(item);
+            i++;
+          })
+          context.commit('setMessages', res.data)
+        })
     },
     pushItem(context, value) {
       context.commit('pushItem', value);
@@ -154,8 +154,7 @@ export default new Vuex.Store({
   },
   getters: {
     getName: state => state.userInfo.name,
-    //messages: state => Object.filter(state.users, (user) => user.messages.name === state.items[state.selectedUserNum].name)
-    messages: state => state.messages.filter((message) => message.sendUserName === state.friends[state.selectedUserNum].name || message.receiveUserName === state.friends[state.selectedUserNum].name ),
+    messages: state => state.messages.filter((message) => message.sendUserName === state.friends[state.selectedUserNum].name || message.receiveUserName === state.friends[state.selectedUserNum].name),
     userToken: state => state.userInfo.token
   }
 })
