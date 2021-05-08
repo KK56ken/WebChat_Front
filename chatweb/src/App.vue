@@ -1,21 +1,23 @@
 <template>
   <v-app>
-   <v-main>
-      <v-row class="justify-center">
-          <template v-if="userToken">
-            <v-col cols="4">
-              <router-link to="/Login" class="header-item">
-                <v-card style="text-align: center">ログインページ</v-card>
-              </router-link>
-            </v-col>
-            <v-col cols="4">
-              <router-link to="/Register" class="header-item">
-                <v-card style="text-align: center">登録ページ</v-card>
-              </router-link>
-            </v-col>
-          </template>
-      </v-row>
-      <router-view></router-view>
+    <v-row class="justify-center">
+      <template v-if="userToken">
+        <v-col cols="4">
+          <router-link to="/Login" class="header-item">
+            <v-card style="text-align: center">ログインページ</v-card>
+          </router-link>
+        </v-col>
+        <v-col cols="4">
+          <router-link to="/Register" class="header-item">
+            <v-card style="text-align: center">登録ページ</v-card>
+          </router-link>
+        </v-col>
+      </template>
+    </v-row>
+    <v-main>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
     </v-main>
   </v-app>
 </template>

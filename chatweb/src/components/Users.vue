@@ -1,11 +1,11 @@
 <template>
-    <div>
-        <v-col class="pt-0 pr-0 pb-0">
+    <v-row>
+      <v-col class="pb-0">
         <v-card
           tile
           style='height: 100vh'
         >
-          <v-list shaped >
+          <v-list shaped>
             <v-subheader>Recent chat</v-subheader>
             <v-list-item-group
               v-model="selectedItem"
@@ -26,7 +26,7 @@
           </v-list>
         </v-card>
       </v-col>
-    </div>
+    </v-row>
 </template>
 <script>
 export default {

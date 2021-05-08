@@ -121,7 +121,7 @@ export default new Vuex.Store({
       })
     },
     getFriends(context) {
-      axios.get('http://localhost:9000/api/friend?id=1')
+      axios.get('http://localhost:9000/api/friend?id=' + context.state.userInfo.userid)
         .then(res => {
           var i = 0;
           res.data.forEach(item => {
@@ -132,7 +132,7 @@ export default new Vuex.Store({
         })
     },
     getMessages(context) {
-      axios.get('http://localhost:9000/api/message?id=1')
+      axios.get('http://localhost:9000/api/message?id=' + context.state.userInfo.userid)
         .then(res => {
           var i = 0;
           res.data.forEach(item => {
@@ -150,9 +150,12 @@ export default new Vuex.Store({
         Message: messages.message
       }).then(res => {
         console.log(res.data)
-        context.commit('pushMessage', res.data)
+        // context.commit('pushMessage', res.data)
         })
     },
+    wsPushMessage(context, message) {
+      context.commit('pushMessage', message)
+    }
   },
   modules: {
   },
