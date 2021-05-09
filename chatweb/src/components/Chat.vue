@@ -1,30 +1,36 @@
 <template>
     <v-row class="pb-0">
         <v-col cols="12" class="pb-0">
-            <v-virtual-scroll
-                :bench="benched"
-                :items="$store.getters.messages"
-                :height="height"
-                item-height="80"
-                id="virtual-scroll"
-            >
-                <template v-slot:default="{ item }">
-                    <v-list-item :key="item.message" class="pt-0 pl-0 pr-0">
-                        <v-list-item-avatar class="ma-5">
-                            <v-img :src="item.avatar"></v-img>
-                        </v-list-item-avatar>
+            <v-list class="pt-0">
+                <v-list-item-group
+                    color="primary"
+                >
+                    <v-virtual-scroll
+                        :bench="benched"
+                        :items="$store.getters.messages"
+                        :height="height"
+                        item-height="80"
+                        id="virtual-scroll"
+                    >
+                        <template v-slot:default="{ index, item }">
+                            <v-list-item @click="setIndex(index)" :key="item.time"  class="pt-0 pl-0 pr-0">
+                                <v-list-item-avatar class="ma-5">
+                                    <v-img :src="item.avatar"></v-img>
+                                </v-list-item-avatar>
 
-                        <v-list-item-content>
-                            <v-list-item-title>{{ item.sendUserName }}</v-list-item-title>
-                            <v-list-item-subtitle class="white-space">{{ item.message }}</v-list-item-subtitle>
-                        </v-list-item-content>
-                    </v-list-item>
-                </template>
-            </v-virtual-scroll>
+                                <v-list-item-content>
+                                    <v-list-item-title>{{ item.sendUserName }}</v-list-item-title>
+                                    <v-list-item-subtitle class="white-space">{{ item.message }}</v-list-item-subtitle>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </template>
+                    </v-virtual-scroll>
+                </v-list-item-group>
+            </v-list>
         </v-col>
         <v-col cols="12" class="pt-0 pb-0">
             <v-row>
-                <v-col cols="10" class="pr-0 pb-0">
+                <v-col cols="10" class="pt-0 pr-0 pb-0">
                     <v-textarea
                         v-model="text"
                         outlined
@@ -35,7 +41,7 @@
                         hide-details
                     ></v-textarea>
                 </v-col>
-                <v-col cols="2" class="pl-0 pb-0">
+                <v-col cols="2" class="pt-0 pl-0 pb-0">
                     <v-btn @click="pushMessage(text); send(text)" style="width:100%; height:130px" color="primary" dark>
                         送信
                     </v-btn>
@@ -72,10 +78,11 @@ export default {
         },
     },
     updated(){
-        var container = this.$el.getElementsByClassName('v-virtual-scroll__container');
-        this.scrollHeight = container[0].style.height.replace(/[^0-9]/g, '');
-        var container2 = this.$el.querySelector('#virtual-scroll');
-        container2.scrollTop = Number(this.scrollHeight);
+        // var container = this.$el.getElementsByClassName('v-virtual-scroll__container');
+        // this.scrollHeight = container[0].style.height.replace(/[^0-9]/g, '');
+        // var container2 = this.$el.querySelector('#virtual-scroll');
+        // container2.scrollTop = Number(this.scrollHeight);
+        
     },
     methods:{
         wsPushMessage(message){
@@ -103,6 +110,9 @@ export default {
             )
             this.text = "";
         },
+        setIndex(index){
+            this.selectedItem = index
+        }
     },
     created(){
         var self = this;
